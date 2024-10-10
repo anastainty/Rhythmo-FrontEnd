@@ -20,7 +20,7 @@ const App = () => {
           <div className="profile-header">
             <PageTitle /> {/* Заголовок страницы */}
             <button className="logout-button">Log out</button>
-            <img src="profile-pic.png" alt="Profile" className="profile-picture" />
+            <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
           </div>
 
           <Routes>
