@@ -5,9 +5,9 @@ import './Sidebar.css';
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <div className="profile">
-        <img src="/path-to-profile-icon" alt="Profile Icon" className="profile-icon" />
-      </div>
+
+        <img src="/path-to-profile-icon" alt="Logo" className="logo-icon" />
+
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/library">Library</Link></li>
