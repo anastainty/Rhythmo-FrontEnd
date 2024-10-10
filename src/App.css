@@ -24,3 +24,35 @@
   overflow-y: auto;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 25px;
+  margin-right: 32px;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.logout-button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 13px 25px;
+  border-radius: 13px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-right: 40px;
+}
+
+.logout-button:hover {
+  background-color: rgb(177, 172, 201);
+  color: rgb(0, 0, 0);
+}

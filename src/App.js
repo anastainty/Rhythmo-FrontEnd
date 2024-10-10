@@ -16,6 +16,13 @@ const App = () => {
 
         {/* Основной контент */}
         <div className="content-container">
+
+
+          <div className="profile-header">
+            <button className="logout-button">Log out</button>
+            <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
+          </div>
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/library" element={<Library />} />
