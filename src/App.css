@@ -1,58 +1,9 @@
 
-
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-}
-
-.sidebar {
-  width: 16%;
-  background-color: #2e2e2e;
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  color: white;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.profile {
-  margin-bottom: 20px;
-}
-
-.profile-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.nav-links {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-}
-
-.nav-links li {
-  margin: 10px 0;
-  padding: 10px;
-  text-align: center;
-}
-
-.nav-links li a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  display: block;
-  width: 100%;
-}
-
-.nav-links li a:hover {
-  background-color: #454545;
 }
 
 .content-container {
