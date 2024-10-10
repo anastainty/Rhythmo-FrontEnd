@@ -29,8 +29,8 @@
 }
 
 .nav-links li {
-  margin: 10px 0; /* Оставьте отступ между элементами списка */
-  padding: 0; /* Убедитесь, что нет отступов у самого элемента списка */
+  margin: 10px 0;
+  padding: 0;
   text-align: center;
 }
 
@@ -38,11 +38,11 @@
   color: white;
   text-decoration: none;
   font-size: 18px;
-  display: inline-block; /* Используйте inline-block для контроля размера */
-  padding: 10px 40px; /* Увеличьте отступы для ширины */
+  display: inline-block;
+  padding: 10px 40px;
 }
 
 .nav-links li a:hover {
   background-color: rgba(42, 43, 68, 0.689);
-  border-radius: 9px; /* Закругленные края */
+  border-radius: 9px;
 }
