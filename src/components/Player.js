@@ -1,5 +1,5 @@
 import React from 'react';
-//import './Player.css';  // Подключение стилей плеера - потом нужно будет разделитть по файлам стили
+import './Player.css';
 
 const Player = () => {
   return (
