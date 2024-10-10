@@ -1,0 +1,17 @@
+/* PageTitle.css */
+.page-title-container {
+  background-color: rgba(46, 46, 46, 0.8);
+  border-radius: 12px;
+  padding: 10px 35px;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-left: 100px;
+}
+
+.page-title {
+  color: rgb(164, 158, 203);
+  margin: 0;
+  font-size: 25px;
+}

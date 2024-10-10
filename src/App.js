@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -5,6 +6,7 @@ import Player from './components/Player';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import Search from './pages/Search';
+import PageTitle from './components/PageTitle'; // Импортируйте PageTitle
 import './App.css';
 
 const App = () => {
@@ -16,11 +18,10 @@ const App = () => {
 
         {/* Основной контент */}
         <div className="content-container">
-
-
           <div className="profile-header">
+            <PageTitle /> {/* Заголовок страницы */}
             <button className="logout-button">Log out</button>
-            <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
+            <img src="profile-pic.png" alt="Profile" className="profile-picture" />
           </div>
 
           <Routes>
