@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
 
-        <img src="/path-to-profile-icon" alt="Logo" className="logo-icon" />
+        <img src="logoRH.png" alt="Logo" className="logo-icon" />
 
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
