@@ -3,7 +3,7 @@
   background-color: #0000009c;
   position: fixed;
   left: 8px;
-  top: 8px;
+  top: 12px;
   height: 83svh;
   color: white;
   padding-top: 20px;
@@ -43,6 +43,6 @@
 }
 
 .nav-links li a:hover {
-  background-color: rgb(42, 43, 68);
+  background-color: rgba(42, 43, 68, 0.689);
   border-radius: 9px; /* Закругленные края */
 }
