@@ -1,10 +1,10 @@
 .sidebar {
   width: 16%;
-  background-color: #121212;
+  background-color: #0000009c;
   position: fixed;
   left: 8px;
   top: 8px;
-  height: 100vh;
+  height: 84svh;
   color: white;
   padding-top: 20px;
   display: flex;
