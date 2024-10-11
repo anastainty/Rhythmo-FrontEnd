@@ -8,6 +8,8 @@ const PageTitle = () => {
 
   const getPageTitle = () => {
     switch (location.pathname) {
+      case '/pages/profile':
+        return 'Profile';
       case '/':
         return 'Home';
       case '/library':
@@ -15,7 +17,7 @@ const PageTitle = () => {
       case '/search':
         return 'Search';
       default:
-        return 'Unknown Page';
+        return 'Unknown Page name';
     }
   };
 
