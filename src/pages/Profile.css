@@ -31,7 +31,7 @@
   }
 
 .edit-profile-button {
-    background-color: #000;
+    background-color: #413690d6;
     color: white;
     border: none;
     padding: 10px 35px;
@@ -43,5 +43,5 @@
 
   .edit-profile-button:hover {
     background-color: rgb(222, 217, 239);
-    color:#000
+    color:#000000
   }
