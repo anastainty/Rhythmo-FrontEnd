@@ -11,8 +11,8 @@
   flex-direction: column;
   align-items: center;
   border-radius: 15px;
+  overflow: hidden;
 }
-
 
 .logo-icon {
   width: 90%;
@@ -32,6 +32,8 @@
   margin: 10px 0;
   padding: 0;
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-links li a {
@@ -39,10 +41,35 @@
   text-decoration: none;
   font-size: 18px;
   display: inline-block;
-  padding: 10px 40px;
+  padding: 10px 20px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-links li a:hover {
   background-color: rgba(42, 43, 68, 0.689);
   border-radius: 9px;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  flex-shrink: 0; /* Иконки не уменьшаются */
+}
+
+@media (max-width: 768px) {
+  .nav-links li a {
+    font-size: 16px; /* Уменьшаем размер текста на меньших экранах */
+    padding: 8px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links li a {
+    font-size: 14px; /* Ещё меньше на маленьких экранах */
+    padding: 5px 10px;
+  }
 }
