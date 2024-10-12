@@ -26,7 +26,7 @@
 .search-options {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Позволяет элементам переходить на следующую строку */
+  flex-wrap: wrap;
   margin-bottom: 40px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .genres-heading {
-    font-size: 19px;
+    font-size: 21px;
     margin-bottom: 10px;
     margin-left: 120px;
     align-self: flex-start;
@@ -79,8 +79,8 @@
   justify-content: left;
   padding-left: 20px;
   color:rgb(57, 101, 86);
-  background:linear-gradient(to bottom, #4caf50, rgb(159, 197, 161));;
-  border: 1px solid #ddd;
+  background:linear-gradient(to bottom, #4caf50, rgb(139, 39, 23));
+  border: 0px solid #ddd;
   border-radius: 6px;
   font-size: 24px;
   cursor: pointer;
