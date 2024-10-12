@@ -53,3 +53,28 @@ h2 {
 .playlist-item:hover, .artist-item:hover, .podcast-item:hover {
   transform: scale(1.015); /* зум при наведении */
 }
+
+
+
+@media (max-width: 780px) {
+  h2 {
+      font-size: 20px;
+  }
+  .playlist-item, .artist-item, .podcast-item {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 500px) {
+  h2 {
+      font-size: 16px;
+  }
+  .playlist-item, .artist-item, .podcast-item {
+       width: 100px;
+       height: 100px;
+  }
+  .horizontal-scroll {
+    gap: 10px;
+  }
+}
