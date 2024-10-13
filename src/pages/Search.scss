@@ -1,0 +1,131 @@
+// Переменные для часто используемых значений
+$primary-bg-color: rgba(74, 74, 74, 0.538);
+$border-color: rgba(255, 255, 255, 0.383);
+$hover-bg-color: #e0e0e091;
+$active-bg-color: rgb(215, 215, 215);
+$active-color: #000;
+$text-color: #ddd;
+$placeholder-color: #b9b9b9;
+$gradient-bg: linear-gradient(to bottom, #4caf50, rgb(139, 39, 23));
+$hover-transform: scale(1.02);
+$mobile-font-size: 16px;
+$mobile-margin-left: 20px;
+$tablet-font-size: 13px;
+$tablet-margin-left: 10px;
+
+// Основной контейнер страницы
+.search-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+
+    // Поле ввода поиска
+    .search-input {
+        width: 100%;
+        max-width: 600px;
+        padding: 10px;
+        margin-bottom: 33px;
+        font-size: 16px;
+        border: 1px solid $border-color;
+        border-radius: 11px;
+        background-color: $primary-bg-color;
+        color: #ffffff;
+
+        &::placeholder {
+            color: $placeholder-color;
+            opacity: 1;
+        }
+    }
+
+    // Опции поиска
+    .search-options {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+
+        .search-option {
+            padding: 3px 20px;
+            margin: 3px 9px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.113);
+            color: $text-color;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: $hover-bg-color;
+            }
+
+            &.active {
+                background-color: $active-bg-color;
+                color: $active-color;
+            }
+        }
+    }
+}
+
+// Заголовок жанров
+.genres-heading {
+    font-size: 21px;
+    margin-bottom: 10px;
+    margin-left: 120px;
+    align-self: flex-start;
+    text-align: left;
+    width: 100%;
+    color: white;
+}
+
+// Контейнер с жанрами
+.genres-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+    gap: 10px;
+    max-width: 100%;
+    height: 84px;
+
+    .genre-box {
+        min-width: 170px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding-left: 20px;
+        color: rgb(57, 101, 86);
+        background: $gradient-bg;
+        border: 0px solid #ddd;
+        border-radius: 6px;
+        font-size: 24px;
+        cursor: pointer;
+        transition: transform 0.1s, background-color 0.2s;
+        box-sizing: border-box;
+        font-weight: bold;
+
+        &:hover {
+            transform: $hover-transform;
+            background-color: rgb(47, 46, 134);
+            color: white;
+        }
+    }
+}
+
+// Медиазапросы для адаптивного дизайна
+@media (max-width: 768px) {
+    .genres-heading {
+        font-size: $mobile-font-size; /* Уменьшенный размер шрифта */
+        margin-left: $mobile-margin-left; /* Уменьшение отступа */
+    }
+}
+
+@media (max-width: 400px) {
+    .genres-heading {
+        font-size: $tablet-font-size; /* Еще более уменьшенный размер шрифта */
+        margin-left: $tablet-margin-left; /* Еще меньше отступ */
+    }
+}
