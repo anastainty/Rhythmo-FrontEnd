@@ -1,5 +1,5 @@
 import React from 'react';
-import './Profile.css';  // потом добавить стили
+import './Profile.scss';
 
 const Profile = () => {
   const user = {
