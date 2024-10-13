@@ -1,4 +1,4 @@
-// Переменные для часто используемых значений
+
 $primary-bg-color: rgba(74, 74, 74, 0.538);
 $border-color: rgba(255, 255, 255, 0.383);
 $hover-bg-color: #e0e0e091;
@@ -13,7 +13,7 @@ $mobile-margin-left: 20px;
 $tablet-font-size: 13px;
 $tablet-margin-left: 10px;
 
-// Основной контейнер страницы
+
 .search-page {
     display: flex;
     flex-direction: column;
@@ -21,7 +21,6 @@ $tablet-margin-left: 10px;
     padding: 20px;
     overflow: hidden;
 
-    // Поле ввода поиска
     .search-input {
         width: 100%;
         max-width: 600px;
@@ -39,7 +38,7 @@ $tablet-margin-left: 10px;
         }
     }
 
-    // Опции поиска
+
     .search-options {
         display: flex;
         justify-content: center;
@@ -80,7 +79,7 @@ $tablet-margin-left: 10px;
     color: white;
 }
 
-// Контейнер с жанрами
+
 .genres-container {
     display: flex;
     overflow-x: auto;

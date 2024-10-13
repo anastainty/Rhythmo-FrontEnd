@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import './PageTitle.css';
+import './PageTitle.scss';
 
 const PageTitle = () => {
   const location = useLocation();

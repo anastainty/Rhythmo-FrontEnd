@@ -7,7 +7,7 @@ import Library from './pages/Library';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import PageTitle from './components/PageTitle'; // Импортируйте PageTitle
-import './App.css';
+import './App.scss';
 
 const App = () => {
   return (
