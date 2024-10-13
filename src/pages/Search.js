@@ -55,7 +55,7 @@ const Search = () => {
       </div>
 
       {/* Жанры */}
-      <h4 className="genres-heading">Genres&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;Discover new music</h4>      // &nbsp;&nbsp; - это пробелы
+      <h4 className="genres-heading">Genres&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;Discover new music</h4>
       <div className="genres-container">
       {genres.map((genre) => (
           <div
