@@ -7,6 +7,7 @@ import Library from './pages/Library';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import PageTitle from './components/PageTitle'; // Импортируйте PageTitle
+import Registration from './pages/Registration';
 import './App.scss';
 
 const App = () => {
@@ -20,7 +21,7 @@ const App = () => {
         <div className="content-container">
           <div className="profile-header">
             <PageTitle /> {/* Заголовок страницы */}
-            <button className="logout-button">Log out</button>
+            <li> <Link to = "/registration" className="logout-button"> Log out</Link></li>
             <Link to="/pages/profile">
             <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
             </Link>
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/library" element={<Library />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/registration" element={<Registration />} />
           </Routes>
         </div>
 
