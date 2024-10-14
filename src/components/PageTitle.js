@@ -16,6 +16,8 @@ const PageTitle = () => {
         return 'Library';
       case '/search':
         return 'Search';
+      case '/registration':
+        return 'Registration';
       default:
         return 'Unknown Page name';
     }
