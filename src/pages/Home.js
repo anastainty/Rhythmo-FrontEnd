@@ -8,7 +8,8 @@ const Home = () => {
       <div className="section">
         <h2>Recently Played Playlists</h2>
         <div className="horizontal-scroll">
-          <div className="playlist-item">Playlist 1</div>
+          <div className="playlist-item">
+            Playlist 1</div>
           <div className="playlist-item">Playlist 2</div>
           <div className="playlist-item">Playlist 3</div>
           <div className="playlist-item">Playlist 4</div>
