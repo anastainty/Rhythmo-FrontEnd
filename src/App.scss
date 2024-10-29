@@ -60,4 +60,15 @@
       color: rgb(0, 0, 0);
     }
   }
+
+  @media (max-width: 600px) {
+    .logout-button {
+      padding: 5px 17px;
+      font-size: 12px;
+    }
+    .profile-picture{
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
