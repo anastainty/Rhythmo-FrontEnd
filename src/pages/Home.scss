@@ -1,7 +1,7 @@
 .home-container {
   padding: 20px;
   height: calc(100vh - 90px);
-  overflow-y: auto; /* вертикальная прокрутка  */
+  overflow-y: auto; 
   display: flex;
   flex-direction: column;
 
@@ -23,14 +23,36 @@
     }
   }
 
+  .output-container {
+    background-color: rgb(51, 37, 111);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;  
+    width: 100%;  
+    max-width: 800px;  
+  
+    // Адаптивный размер шрифта
+    font-size: calc(16px + 0.5vw);
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 600px) {
+    .output-container {
+      font-size: 14px;  
+    }
+  }
+  
+  
   .horizontal-scroll {
     display: flex;
-    overflow-x: auto; /* Горизонтальная прокрутка */
+    overflow-x: auto; 
     padding-bottom: 10px;
     gap: 20px;
 
     scrollbar-width: none;
-    -ms-overflow-style: none; /* скрываем прокрутки */
+    -ms-overflow-style: none; 
 
     &::-webkit-scrollbar {
       display: none;

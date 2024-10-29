@@ -1,5 +1,8 @@
 import React from 'react';
 import './Home.scss';
+import YourComponent from '../components/YourComponent';
+
+
 
 const Home = () => {
   return (
@@ -15,6 +18,10 @@ const Home = () => {
           <div className="playlist-item">Playlist 5</div>
           <div className="playlist-item">Playlist 6</div>
         </div>
+      </div>
+
+      <div className="output-container">
+        <YourComponent />
       </div>
 
       {/* Favourite Artists */}
