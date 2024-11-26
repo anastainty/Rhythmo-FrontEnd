@@ -18,6 +18,8 @@ const PageTitle = () => {
         return 'Search';
       case '/registration':
         return 'Registration';
+      case '/chats':
+        return 'Chats';
       default:
         return 'Unknown Page name';
     }

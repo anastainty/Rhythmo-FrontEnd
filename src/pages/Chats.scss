@@ -1,0 +1,269 @@
+.chat-page {
+  padding: 0px;
+  height: calc(90vh - 170px); 
+  display: flex;
+  background-color: #13131d;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #4e4ec1;
+  border-radius: 8px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 30%; 
+    width: 1px;
+    background-color: rgb(67, 59, 170);
+  }
+
+  @media (max-width: 550px) {
+    &::after {
+      width: 0px;
+    }
+  }
+}
+
+.chat-contacts {
+  position: relative;
+  width: 30%;
+  
+  height: 100%;
+  overflow-y: auto;
+  margin: 10px;
+  margin-right: 0px;
+  margin-left: 0px;
+  padding: 10px;
+  padding-left: 0;
+  padding-right: 0;
+
+  &-searcher {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #13131d;
+    z-index: 0;
+    padding: 0px;
+    border-bottom: 1px solid #3c3c4e;
+  }
+
+  &-list {
+    padding: 10px;
+    margin-top: 10px;
+    padding-left: 0;
+  padding-right: 0;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+}
+
+.search-input {
+  width: 60%;
+  padding: 14px;
+  margin-top: 2px;
+  margin-bottom: 17px;
+  border-radius: 15px;
+  border: none;
+  background: #2e2e3e;
+  border: 1px solid #75757835;
+  color: #fff;
+  outline: none;
+  &:focus {
+    border: 1.5px solid rgb(198, 189, 249); 
+    transition: border-color 0.2s; 
+  }
+}
+
+.contact-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 0px;
+ // border-bottom: 1px solid #505050;  // можно убрать
+  transition: background 0.3s;
+
+  &:hover,
+  &.active {
+    background: #2a2a55;
+    border-bottom: 1px solid #505050;  // можно убрать
+    border-top: 1px solid #505050;  // можно убрать
+  }
+
+  .contact-info {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  gap: 10px; 
+
+  .contact-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; 
+    object-fit: cover;
+  }
+
+  .contact-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .contact-name {
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .contact-last-message {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-top: 0;
+  }
+}
+
+
+  .online-indicator {
+    position: absolute; 
+    left: 5px;
+    
+    width: 10px;
+    height: 10px;
+    background: rgb(54, 234, 54);
+    border-radius: 50%;
+  }
+}
+
+.chat-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  .chat-header {
+  height: 60px;
+  display: flex;
+  align-items:center;
+  margin-bottom: 0px;
+  border-bottom: 1px solid #3c3c4e;
+  padding-bottom: 10px;
+
+  .avatar-container {
+    margin-right: 20px; // отступ между аватаркой и текстом
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+
+    .user-name {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+
+    .user-status {
+      font-size: 0.9rem;
+      color: rgb(125, 146, 129);
+    }
+  }
+}
+
+
+  .messages-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    scrollbar-width: none; /* скрыла прокрутки, можно убрать */
+    -ms-overflow-style: none;
+
+  }
+  .messages-container::-webkit-scrollbar {
+    display: none;   /* скрыла прокрутки для хрома, можно убрать */
+  }
+
+  .message p {
+    margin: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .message {
+    margin: 10px 0;
+    max-width: 70%;
+    padding: 10px;
+
+    &.sent {
+      align-self : flex-end;
+      background: rgb(65, 34, 167);
+      border-radius: 10px 10px 0 10px;
+    }
+    
+    &.received {
+      align-self: flex-start;
+      background: #3c3c4e;
+      border-radius: 0px 10px 10px 10px;
+    }
+
+    .message-time {
+      font-size: 0.8rem;
+      text-align: right;
+      margin-top: 5px;
+      color: #bbb;
+    }
+  }
+}
+
+.message-input-container {
+  height: 40px;
+  display: flex;
+  gap: 10px;
+
+  input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    background: #2e2e3e;
+    color: #fff;
+    border: 1.4px solid #a4a4a735;
+    outline: none;
+
+    &:focus { // при наведении
+      border: 1px solid rgb(200, 201, 219);
+      transition: border-color 0.15s,;
+    }
+  }
+  
+
+  button {
+    padding: 10px 10px;
+    border-radius: 20px;
+    border: none;
+    background: #5c5cff;
+    color: #fff;
+    cursor: pointer;
+    .icon-send {
+      width: 20px;
+    }
+  }
+
+}

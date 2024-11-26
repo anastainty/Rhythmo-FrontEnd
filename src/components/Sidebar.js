@@ -12,6 +12,7 @@ const Sidebar = () => {
         <li><Link to="/"><img src="/home-icon.png" alt="Home" className="nav-icon" />Home</Link></li>
         <li><Link to="/library"><img src="/disc-icon.png" alt="Disc" className="nav-icon" />Library</Link></li>
         <li><Link to="/search"><img src="/search-icon.png" alt="Search" className="nav-icon" />Search</Link></li>
+        <li><Link to="/chats"><img src="/chat-icon.png" alt="Chats" className="nav-icon" />Chats</Link></li>
       </ul>
     </div>
   );

@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Library from './pages/Library';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
+import Chats from './pages/Chats';
 import PageTitle from './components/PageTitle';
 import Registration from './pages/Registration';
 import './App.scss';
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/library" element={<Library />} />
           <Route path="/search" element={<Search />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/chats" element={<Chats />} />
         </Routes>
       </div>
 
