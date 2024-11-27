@@ -32,12 +32,8 @@
   
   height: 100%;
   overflow-y: auto;
-  margin: 10px;
-  margin-right: 0px;
-  margin-left: 0px;
-  padding: 10px;
-  padding-left: 0;
-  padding-right: 0;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 
   &-searcher {
     position: sticky;
@@ -66,7 +62,7 @@
 .search-input {
   width: 60%;
   padding: 14px;
-  margin-top: 2px;
+  margin-top: 20px;
   margin-bottom: 17px;
   border-radius: 15px;
   border: none;
@@ -213,10 +209,10 @@
 
     &.sent {
       align-self : flex-end;
-      background: rgb(65, 34, 167);
+      background: rgb(61, 34, 167);
       border-radius: 10px 10px 0 10px;
     }
-    
+
     &.received {
       align-self: flex-start;
       background: #3c3c4e;
@@ -252,7 +248,7 @@
       transition: border-color 0.15s,;
     }
   }
-  
+
 
   button {
     padding: 10px 10px;

@@ -10,8 +10,50 @@ const contacts = [
 
 const messages = {
   1: [
-    { text: "Hello! Is it true what they say about ...?", sender: "me", time: "1:22 PM" },
-    { text: "Hi! Yeeees, I’m really shocked. This song describes the situation)", sender: "Maria", time: "1:43 PM" },
+    { text: "Oh, Ira, did you see? We have a new Karaoke Mode! 😍 I just sang my favorite BTS song", sender: "Maria", time: "1:22 PM" },
+    { text: "Машка, ты чего на инглише базаришь, я не поняла", sender: "me", time: "1:23 PM" },
+    { text: "You can play any song, and the lyrics pop up, just like in real karaoke. It even highlights the lines as you sing along. It’s amazing!", sender: "Maria", time: "1:29 PM" },
+    { text: "Cant wait!! 😉🎤✨", sender: "me", time: "1:33 PM" },
+  ],
+  4: [
+    { text: <> <em>We’ve Got Big News!</em> 🌟 </>, sender: "rhythmo", time: "1:20 PM" },
+
+    { text: <>
+    <em> Discover a Whole New Groove! ✨ </em> <br />
+      <br />
+      Hey <strong>Music Lovers</strong> 👋,<br />
+      We’ve been hard at work tuning up your experience, and guess what? A shiny new update is here! 🚀<br />
+      <br />
+      - New <strong>Personalized Playlists</strong> tailored to your mood 🌈.<br />
+      - Faster search for your favorite jams 🔍.<br />
+      - Fresh UI to make navigating smoother than ever 🖌️.<br />
+      <br />
+      Update your app now and let the music play! 🎧🎵
+    </>,
+    sender: "rhythmo", time: "1:22 PM" },
+
+    { text: <> <div>
+      <h3 style={{ color: 'rgb(198, 189, 249)' }}>Your Music Journey Just Got Better! 🌟</h3>
+      <p style={{ fontWeight: 'bold' }}>Hello <em>Music Fam</em>!</p>
+      <p>Our latest update is <strong style={{ color: '#7aef7e' }}>LIVE</strong>, and it’s packed with exciting features:</p>
+      
+      <ul style={{ paddingLeft: '24px' }}>
+        <li>
+          <strong>🎤 Karaoke Mode</strong> – Sing along to your favorite tracks with <em>synced lyrics</em>.
+        </li>
+        <li>
+          <strong>📈 Music Insights</strong> – See your most-played artists and genres.
+        </li>
+        <li>
+          <strong>🎧 Genre Explorer</strong> – Find new favorites effortlessly!
+        </li>
+      </ul>
+
+      <p style={{ fontStyle: 'italic' }}>
+        Don’t miss out—<strong>update now</strong> and explore the sounds! 🎶
+      </p>
+    </div> </>,
+    sender: "rhythmo", time: "1:30 PM" },
   ],
 };
 
@@ -27,7 +69,7 @@ const Chats = () => {
     if (container) {
       container.scrollTo({
         top: container.scrollHeight,
-        behavior: "smooth", 
+        behavior: "smooth",
       });
     }
   };
@@ -90,7 +132,7 @@ const Chats = () => {
         <div className="chat-header">
           <div className="avatar-container">
             <img
-              src={`maria.jpeg`}
+              src={`avatar-${contacts.find((contact) => contact.id === activeChat)?.id}.jpeg`}
               alt="User Avatar"
               className="avatar"
             />
