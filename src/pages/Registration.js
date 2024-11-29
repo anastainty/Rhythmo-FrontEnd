@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from './api'; // Импортируем настроенный Axios клиент
 import './Registration.scss';
 
 const Registration = () => {
@@ -6,15 +7,15 @@ const Registration = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
   
-  // Дополнительные состояния для ошибок при входе
   const [loginData, setLoginData] = useState({
-    email: '',
+    username: '',
     password: '',
   });
   const [loginErrors, setLoginErrors] = useState({});
@@ -43,11 +44,14 @@ const Registration = () => {
     if (!formData.lastName) {
       newErrors.lastName = 'Фамилия не может быть пустой';
     }
+    if (!formData.username) {
+      newErrors.username = 'Имя пользователя не может быть пустым';
+    }
     if (!formData.email.includes('@')) {
-      newErrors.email = 'Такого e-mail не существует. Попробуйте ещё раз.';
+      newErrors.email = 'Некорректный e-mail. Попробуйте ещё раз.';
     }
     if (formData.password.length < 6) {
-      newErrors.password = 'Пароль должен содержать не менее 6 символов, в том числе цифры, прописные и строчные буквы латинского алфавита.';
+      newErrors.password = 'Пароль должен содержать не менее 6 символов, включая цифры и буквы.';
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Пароли не совпадают. Попробуйте ещё раз.';
@@ -57,8 +61,8 @@ const Registration = () => {
 
   const validateLogin = () => {
     const loginErrors = {};
-    if (!loginData.email.includes('@')) {
-      loginErrors.email = 'Похоже, что такого пользователя не существует.';
+    if (!loginData.username) {
+      loginErrors.username = 'Имя пользователя не может быть пустым.';
     }
     if (loginData.password.length < 6) {
       loginErrors.password = 'Пароль слишком короткий. Попробуйте ещё раз.';
@@ -71,16 +75,29 @@ const Registration = () => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       console.log('Форма регистрации успешно отправлена:', formData);
+      alert('Регистрация прошла успешно!');
     } else {
       setErrors(validationErrors);
     }
   };
 
-  const handleLoginSubmit = (e) => {
+  const API_BASE_URL = 'https://24b2-217-21-43-190.ngrok-free.app';
+
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateLogin();
     if (Object.keys(validationErrors).length === 0) {
-      console.log('Форма входа успешно отправлена:', loginData);
+      try {
+        const response = await api.post(`${API_BASE_URL}/login/`, {
+          username: loginData.username,
+          password: loginData.password,
+        });
+        console.log('Login successful:', response.data);
+        alert('Вы успешно вошли в систему!');
+      } catch (error) {
+        console.error('Ошибка при входе:', error);
+        setLoginErrors({ form: 'Ошибка при входе. Попробуйте ещё раз.' });
+      }
     } else {
       setLoginErrors(validationErrors);
     }
@@ -107,14 +124,14 @@ const Registration = () => {
         <form className="login-form" onSubmit={handleLoginSubmit}>
           <div className="input-container">
             <input
-              type="email"
-              name="email"
-              placeholder="E-mail"
+              type="text"
+              name="username"
+              placeholder="Имя пользователя"
               className="input-field"
-              value={loginData.email}
+              value={loginData.username}
               onChange={handleLoginInputChange}
             />
-            {loginErrors.email && <div className="error-message">{loginErrors.email}</div>}
+            {loginErrors.username && <div className="error-message">{loginErrors.username}</div>}
             <span className="icon-user"></span>
           </div>
 
@@ -172,6 +189,18 @@ const Registration = () => {
               onChange={handleInputChange}
             />
             {errors.lastName && <div className="error-message">{errors.lastName}</div>}
+          </div>
+
+          <div className="input-container">
+            <input
+              type="text"
+              name="username"
+              placeholder="Имя пользователя"
+              className="input-field"
+              value={formData.username}
+              onChange={handleInputChange}
+            />
+            {errors.username && <div className="error-message">{errors.username}</div>}
           </div>
 
           <div className="input-container">
