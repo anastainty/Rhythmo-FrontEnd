@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from './api'; // Импортируем настроенный Axios клиент
+import api from './api';
 import './Registration.scss';
 
 const Registration = () => {
@@ -70,28 +70,39 @@ const Registration = () => {
     return loginErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      console.log('Форма регистрации успешно отправлена:', formData);
-      alert('Регистрация прошла успешно!');
+      try {
+        const response = await api.post(`/register/`, {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        });
+        console.log('Registration successful:', response.data);
+        alert('Вы успешно зарегистрировались!');
+      } catch (error) {
+        console.error('Error during registration:', error);
+        setErrors({ form: 'Ошибка при регистрации. Попробуйте ещё раз.' });
+      }
     } else {
       setErrors(validationErrors);
     }
   };
-
-  const API_BASE_URL = 'https://24b2-217-21-43-190.ngrok-free.app';
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateLogin();
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await api.post(`${API_BASE_URL}/login/`, {
+        const response = await api.post(`/token/`, {
           username: loginData.username,
           password: loginData.password,
         });
+        const { access, refresh } = response.data;
+        localStorage.setItem('accessToken', access);
+        localStorage.setItem('refreshToken', refresh);
         console.log('Login successful:', response.data);
         alert('Вы успешно вошли в систему!');
       } catch (error) {
