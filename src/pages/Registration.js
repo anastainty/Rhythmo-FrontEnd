@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from './api';
+import { logInfo, logError } from '../utils/logger'; // Убедитесь, что функции логирования доступны
 import './Registration.scss';
 
 const Registration = () => {
@@ -21,6 +22,7 @@ const Registration = () => {
   const [loginErrors, setLoginErrors] = useState({});
 
   const handleTabClick = (tab) => {
+    logInfo('Tab switched', { tab }); // Логируем, когда вкладка изменяется
     setActiveTab(tab);
     setErrors({});
     setLoginErrors({});
@@ -29,11 +31,13 @@ const Registration = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    logInfo('Registration input changed', { name, value }); // Логируем изменение в полях регистрации
   };
 
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
+    logInfo('Login input changed', { name, value }); // Логируем изменение в полях логина
   };
 
   const validateForm = () => {
@@ -72,6 +76,7 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    logInfo('Registration form submitted', { formData }); // Логируем отправку формы регистрации
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       try {
@@ -80,19 +85,23 @@ const Registration = () => {
           email: formData.email,
           password: formData.password,
         });
+        logInfo('Registration successful', { responseData: response.data }); // Логируем успешную регистрацию
         console.log('Registration successful:', response.data);
         alert('Вы успешно зарегистрировались!');
       } catch (error) {
+        logError('Error during registration', { error }); // Логируем ошибку при регистрации
         console.error('Error during registration:', error);
         setErrors({ form: 'Ошибка при регистрации. Попробуйте ещё раз.' });
       }
     } else {
       setErrors(validationErrors);
+      logInfo('Form validation failed', { validationErrors }); // Логируем ошибку валидации формы
     }
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    logInfo('Login form submitted', { loginData }); // Логируем отправку формы логина
     const validationErrors = validateLogin();
     if (Object.keys(validationErrors).length === 0) {
       try {
@@ -103,14 +112,17 @@ const Registration = () => {
         const { access, refresh } = response.data;
         localStorage.setItem('accessToken', access);
         localStorage.setItem('refreshToken', refresh);
+        logInfo('Login successful', { responseData: response.data }); // Логируем успешный логин
         console.log('Login successful:', response.data);
         alert('Вы успешно вошли в систему!');
       } catch (error) {
+        logError('Error during login', { error }); // Логируем ошибку при логине
         console.error('Ошибка при входе:', error);
         setLoginErrors({ form: 'Ошибка при входе. Попробуйте ещё раз.' });
       }
     } else {
       setLoginErrors(validationErrors);
+      logInfo('Login validation failed', { validationErrors }); // Логируем ошибку валидации для логина
     }
   };
 

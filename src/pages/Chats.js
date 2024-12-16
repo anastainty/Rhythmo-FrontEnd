@@ -22,6 +22,8 @@ const Chats = () => {
   const [activeChat, setActiveChat] = useState(1); // ID текущего открытого чата
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState(initialMessages);
+  const [searchQuery, setSearchQuery] = useState(""); // Для хранения поискового запроса
+  const [filteredContacts, setFilteredContacts] = useState(contacts); // Для отображения отфильтрованных контактов
 
   const chatSocket = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -36,17 +38,19 @@ const Chats = () => {
     }
   };
 
-
   useEffect(() => {
+    console.log(`Active chat changed to: ${activeChat}`);
     scrollToBottom();
-  }, [messages[activeChat]]);
+  }, [messages[activeChat], activeChat]); // Логируем изменение активного чата
 
   useEffect(() => {
     if (activeChat === 4) {
+      console.log("Connecting to WebSocket for chat 4...");
       chatSocket.current = new WebSocket("ws://localhost:8001/ws/chat/");
 
       chatSocket.current.onmessage = (event) => {
         const data = JSON.parse(event.data);
+        console.log("Received message from WebSocket:", data);
 
         setMessages((prevMessages) => ({
           ...prevMessages,
@@ -66,6 +70,7 @@ const Chats = () => {
       return () => {
         if (chatSocket.current) {
           chatSocket.current.close();
+          console.log("WebSocket connection closed.");
         }
       };
     }
@@ -75,22 +80,26 @@ const Chats = () => {
     if (newMessage.trim()) {
       const currentTime = new Date().toLocaleTimeString();
 
-      setMessages((prevMessages) => ({
-        ...prevMessages,
-        [activeChat]: [
-          ...prevMessages[activeChat],
-          { text: newMessage, sender: "me", time: currentTime },
-        ],
-      }));
+      setMessages((prevMessages) => {
+        const updatedMessages = {
+          ...prevMessages,
+          [activeChat]: [
+            ...prevMessages[activeChat],
+            { text: newMessage, sender: "me", time: currentTime },
+          ],
+        };
+        console.log("Message sent:", newMessage);
+        return updatedMessages;
+      });
 
       if (activeChat === 4 && chatSocket.current) {
+        console.log("Sending message to WebSocket:", newMessage);
         chatSocket.current.send(JSON.stringify({ message: newMessage }));
       }
 
       setNewMessage("");
     }
   };
-
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -99,19 +108,38 @@ const Chats = () => {
     }
   };
 
+  const handleSearch = (query) => {
+    console.log(`Search query: ${query}`); // Логируем каждый ввод в поисковое поле
+    setSearchQuery(query);
+    const filtered = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(query.toLowerCase()) ||
+      contact.lastMessage.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredContacts(filtered);
+    console.log(`Filtered contacts: ${filtered.map(contact => contact.name).join(", ")}`); // Логируем результаты поиска
+  };
 
   return (
     <div className="chat-page">
       <div className="chat-contacts">
         <div className="chat-contacts-searcher">
-          <input type="text" placeholder="Search messages..." className="search-input" />
+          <input
+            type="text"
+            placeholder="Search messages..."
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
         <div className="chat-contacts-list">
-          {contacts.map((contact) => (
+          {filteredContacts.map((contact) => (
             <li
               key={contact.id}
               className={`contact-item ${activeChat === contact.id ? "active" : ""}`}
-              onClick={() => setActiveChat(contact.id)}
+              onClick={() => {
+                console.log(`Chat selected: ${contact.name}`);
+                setActiveChat(contact.id);
+              }}
             >
               <div className="contact-info">
                 <img
@@ -129,7 +157,6 @@ const Chats = () => {
           ))}
         </div>
       </div>
-
 
       <div className="chat-messages">
         <div className="chat-header">
@@ -159,7 +186,6 @@ const Chats = () => {
             </div>
           ))}
         </div>
-
 
         <div className="message-input-container">
           <input

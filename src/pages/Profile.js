@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Profile.scss';
+
+// Функции логирования (должны быть в отдельном файле, например, `logger.js`)
+import { logInfo, logError } from '../utils/logger';
 
 const Profile = () => {
   const user = {
@@ -10,17 +13,41 @@ const Profile = () => {
     profilePicture: "/profile-picture.jpg",
   };
 
+  useEffect(() => {
+    // Логируем данные о пользователе при загрузке компонента
+    logInfo('User profile loaded', { user });
+  }, []);
+
+  const handleEditProfileClick = () => {
+    logInfo('Edit profile button clicked');
+    // Здесь можно добавить логику для редактирования профиля
+  };
+
+  const handleScroll = () => {
+    logInfo('User scrolled through listening history');
+    // Этот лог сработает при прокрутке контейнера с историей
+  };
+
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <img src={user.profilePicture} alt="Profile" className="big-profile-picture" />
+        <img
+          src={user.profilePicture}
+          alt="Profile"
+          className="big-profile-picture"
+        />
         <div className="user-info">
           <h2>{user.name} {user.surname}</h2>
           <p>Подписки · {user.subscriptions}</p>
           <p>Подписчики · {user.followers}</p>
         </div>
       </div>
-      <button className="edit-profile-button">Edit profile</button>
+      <button
+        className="edit-profile-button"
+        onClick={handleEditProfileClick}
+      >
+        Edit profile
+      </button>
 
       <hr className="divider" />
 
@@ -28,7 +55,10 @@ const Profile = () => {
         <h3 className="history-title">Listening History</h3>
 
         {/* Контейнер для элементов истории с прокруткой */}
-        <div className="history-container">
+        <div
+          className="history-container"
+          onScroll={handleScroll}  // Логируем при прокрутке контейнера истории
+        >
           <div className="history-item">Playlist 1</div>
           <div className="history-item">Playlist 2</div>
           <div className="history-item">Playlist 3</div>
