@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import api from './api';
-import { logInfo, logError } from '../utils/logger'; // Убедитесь, что функции логирования доступны
+import { logInfo, logError } from '../utils/logger';
 import './Registration.scss';
 
 const Registration = () => {
+  const { t } = useTranslation(); // Получаем функцию для перевода
   const [activeTab, setActiveTab] = useState('login');
   const [formData, setFormData] = useState({
     firstName: '',
@@ -22,7 +24,7 @@ const Registration = () => {
   const [loginErrors, setLoginErrors] = useState({});
 
   const handleTabClick = (tab) => {
-    logInfo('Tab switched', { tab }); // Логируем, когда вкладка изменяется
+    logInfo('Tab switched', { tab });
     setActiveTab(tab);
     setErrors({});
     setLoginErrors({});
@@ -31,34 +33,34 @@ const Registration = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    logInfo('Registration input changed', { name, value }); // Логируем изменение в полях регистрации
+    logInfo('Registration input changed', { name, value });
   };
 
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
-    logInfo('Login input changed', { name, value }); // Логируем изменение в полях логина
+    logInfo('Login input changed', { name, value });
   };
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.firstName) {
-      newErrors.firstName = 'Имя не может быть пустым';
+      newErrors.firstName = t('errorFirstName');
     }
     if (!formData.lastName) {
-      newErrors.lastName = 'Фамилия не может быть пустой';
+      newErrors.lastName = t('errorLastName');
     }
     if (!formData.username) {
-      newErrors.username = 'Имя пользователя не может быть пустым';
+      newErrors.username = t('errorUsername');
     }
     if (!formData.email.includes('@')) {
-      newErrors.email = 'Некорректный e-mail. Попробуйте ещё раз.';
+      newErrors.email = t('errorEmail');
     }
     if (formData.password.length < 6) {
-      newErrors.password = 'Пароль должен содержать не менее 6 символов, включая цифры и буквы.';
+      newErrors.password = t('errorPassword');
     }
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Пароли не совпадают. Попробуйте ещё раз.';
+      newErrors.confirmPassword = t('errorConfirmPassword');
     }
     return newErrors;
   };
@@ -66,17 +68,17 @@ const Registration = () => {
   const validateLogin = () => {
     const loginErrors = {};
     if (!loginData.username) {
-      loginErrors.username = 'Имя пользователя не может быть пустым.';
+      loginErrors.username = t('errorLoginUsername');
     }
     if (loginData.password.length < 6) {
-      loginErrors.password = 'Пароль слишком короткий. Попробуйте ещё раз.';
+      loginErrors.password = t('errorLoginPassword');
     }
     return loginErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    logInfo('Registration form submitted', { formData }); // Логируем отправку формы регистрации
+    logInfo('Registration form submitted', { formData });
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       try {
@@ -85,23 +87,23 @@ const Registration = () => {
           email: formData.email,
           password: formData.password,
         });
-        logInfo('Registration successful', { responseData: response.data }); // Логируем успешную регистрацию
+        logInfo('Registration successful', { responseData: response.data });
         console.log('Registration successful:', response.data);
-        alert('Вы успешно зарегистрировались!');
+        alert(t('registrationSuccess'));
       } catch (error) {
-        logError('Error during registration', { error }); // Логируем ошибку при регистрации
+        logError('Error during registration', { error });
         console.error('Error during registration:', error);
-        setErrors({ form: 'Ошибка при регистрации. Попробуйте ещё раз.' });
+        setErrors({ form: t('errorRegistration') });
       }
     } else {
       setErrors(validationErrors);
-      logInfo('Form validation failed', { validationErrors }); // Логируем ошибку валидации формы
+      logInfo('Form validation failed', { validationErrors });
     }
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    logInfo('Login form submitted', { loginData }); // Логируем отправку формы логина
+    logInfo('Login form submitted', { loginData });
     const validationErrors = validateLogin();
     if (Object.keys(validationErrors).length === 0) {
       try {
@@ -112,17 +114,17 @@ const Registration = () => {
         const { access, refresh } = response.data;
         localStorage.setItem('accessToken', access);
         localStorage.setItem('refreshToken', refresh);
-        logInfo('Login successful', { responseData: response.data }); // Логируем успешный логин
+        logInfo('Login successful', { responseData: response.data });
         console.log('Login successful:', response.data);
-        alert('Вы успешно вошли в систему!');
+        alert(t('loginSuccess'));
       } catch (error) {
-        logError('Error during login', { error }); // Логируем ошибку при логине
-        console.error('Ошибка при входе:', error);
-        setLoginErrors({ form: 'Ошибка при входе. Попробуйте ещё раз.' });
+        logError('Error during login', { error });
+        console.error('Error during login:', error);
+        setLoginErrors({ form: t('errorLogin') });
       }
     } else {
       setLoginErrors(validationErrors);
-      logInfo('Login validation failed', { validationErrors }); // Логируем ошибку валидации для логина
+      logInfo('Login validation failed', { validationErrors });
     }
   };
 
@@ -133,13 +135,13 @@ const Registration = () => {
           className={`tab ${activeTab === 'login' ? 'active' : ''}`}
           onClick={() => handleTabClick('login')}
         >
-          ВХОД
+          {t('login')}
         </button>
         <button
           className={`tab ${activeTab === 'registration' ? 'active' : ''}`}
           onClick={() => handleTabClick('registration')}
         >
-          РЕГИСТРАЦИЯ
+          {t('registration')}
         </button>
       </div>
 
@@ -149,7 +151,7 @@ const Registration = () => {
             <input
               type="text"
               name="username"
-              placeholder="Имя пользователя"
+              placeholder={t('username')}
               className="input-field"
               value={loginData.username}
               onChange={handleLoginInputChange}
@@ -162,7 +164,7 @@ const Registration = () => {
             <input
               type="password"
               name="password"
-              placeholder="Пароль"
+              placeholder={t('password')}
               className="input-field"
               value={loginData.password}
               onChange={handleLoginInputChange}
@@ -173,19 +175,19 @@ const Registration = () => {
 
           <div className="remember-me">
             <input type="checkbox" id="remember" />
-            <label htmlFor="remember">Запомнить меня</label>
+            <label htmlFor="remember">{t('rememberMe')}</label>
           </div>
 
-          <button type="submit" className="submit-button">ВОЙТИ</button>
+          <button type="submit" className="submit-button">{t('loginButton')}</button>
 
           <button className="social-button">
             <img src="google-logo.png" alt="Google" className="social-icon" />
-            Продолжить с Google
+            {t('googleLogin')}
           </button>
 
           <button className="social-button">
             <img src="apple-logo.png" alt="Apple" className="social-icon" />
-            Продолжить с Apple
+            {t('appleLogin')}
           </button>
         </form>
       ) : (
@@ -194,7 +196,7 @@ const Registration = () => {
             <input
               type="text"
               name="firstName"
-              placeholder="Имя"
+              placeholder={t('firstName')}
               className="input-field"
               value={formData.firstName}
               onChange={handleInputChange}
@@ -206,7 +208,7 @@ const Registration = () => {
             <input
               type="text"
               name="lastName"
-              placeholder="Фамилия"
+              placeholder={t('lastName')}
               className="input-field"
               value={formData.lastName}
               onChange={handleInputChange}
@@ -218,7 +220,7 @@ const Registration = () => {
             <input
               type="text"
               name="username"
-              placeholder="Имя пользователя"
+              placeholder={t('username')}
               className="input-field"
               value={formData.username}
               onChange={handleInputChange}
@@ -230,7 +232,7 @@ const Registration = () => {
             <input
               type="email"
               name="email"
-              placeholder="E-mail"
+              placeholder={t('email')}
               className="input-field"
               value={formData.email}
               onChange={handleInputChange}
@@ -242,7 +244,7 @@ const Registration = () => {
             <input
               type="password"
               name="password"
-              placeholder="Пароль"
+              placeholder={t('password')}
               className="input-field"
               value={formData.password}
               onChange={handleInputChange}
@@ -254,7 +256,7 @@ const Registration = () => {
             <input
               type="password"
               name="confirmPassword"
-              placeholder="Подтвердите пароль"
+              placeholder={t('confirmPassword')}
               className="input-field"
               value={formData.confirmPassword}
               onChange={handleInputChange}
@@ -262,16 +264,16 @@ const Registration = () => {
             {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
           </div>
 
-          <button type="submit" className="submit-button">РЕГИСТРАЦИЯ</button>
+          <button type="submit" className="submit-button">{t('registerButton')}</button>
 
           <button className="social-button">
             <img src="google-logo.png" alt="Google" className="social-icon" />
-            Продолжить с Google
+            {t('googleLogin')}
           </button>
 
           <button className="social-button">
             <img src="apple-logo.png" alt="Apple" className="social-icon" />
-            Продолжить с Apple
+            {t('appleLogin')}
           </button>
         </form>
       )}

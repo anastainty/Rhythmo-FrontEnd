@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { logInfo, logError } from '../utils/logger'; // Убедитесь, что функции правильно импортированы
+import { logInfo, logError } from '../utils/logger'; 
 import './Search.scss';
+import { useTranslation } from 'react-i18next';
 
 const Search = () => {
+  const { t } = useTranslation(); 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState('All');
 
@@ -20,38 +22,59 @@ const Search = () => {
   const handleSearchChange = (e) => {
     const newQuery = e.target.value;
     setSearchQuery(newQuery);
-    logInfo('Search query updated', { query: newQuery }); // Логируем изменение поискового запроса
+    logInfo('Search query updated', { query: newQuery });
   };
 
   const handleSearchTypeChange = (type) => {
     setSearchType(type);
-    logInfo('Search type changed', { type }); // Логируем изменение типа поиска
+    logInfo('Search type changed', { type });
   };
 
   useEffect(() => {
-    logInfo('Search component mounted'); // Логируем монтирование компонента
+    logInfo('Search component mounted');
     return () => {
-      logInfo('Search component unmounted'); // Логируем размонтирование компонента
+      logInfo('Search component unmounted');
     };
   }, []);
 
   useEffect(() => {
-    // Логируем, когда поисковый запрос или тип поиска изменяется
     logInfo('Search state updated', { searchQuery, searchType });
   }, [searchQuery, searchType]);
 
+  const handleSearchSubmit = async () => {
+    try {
+      const response = await fetch('', {
+        method: 'POST',
+        
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCSRFToken(),
+        },
+        credentials: 'include',
+        body: JSON.stringify({ query: searchQuery }),
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Результат поиска:', result);
+      } else {
+        console.error('Ошибка поиска:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Ошибка сети при отправке поиска:', error);
+    }
+  };
+  
   return (
     <div className="search-page">
-      {/* Поисковая строка */}
       <input
         type="text"
-        placeholder="Search for a song, artist, or album..."
+        placeholder={t('Search for a song, artist, or album...')}
         value={searchQuery}
         onChange={handleSearchChange}
         className="search-input"
       />
 
-      {/* Опции поиска */}
       <div className="search-options">
         {searchOptions.map((option) => (
           <button
@@ -59,22 +82,21 @@ const Search = () => {
             className={`search-option ${searchType === option ? 'active' : ''}`}
             onClick={() => handleSearchTypeChange(option)}
           >
-            {option}
+            {t(option)}
           </button>
         ))}
       </div>
 
-      {/* Жанры */}
-      <h4 className="genres-heading">Genres&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;Discover new music</h4>
+      <h4 className="genres-heading">{t('Genres')}&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;{t('Discover new music')}</h4>
       <div className="genres-container">
         {genres.map((genre) => (
           <div
             key={genre.name}
             className="genre-box"
             style={{ background: genre.gradient, color: genre.color }} 
-            onClick={() => logInfo('Genre clicked', { genre: genre.name })} // Логируем клик по жанру
+            onClick={() => logInfo('Genre clicked', { genre: genre.name })}
           >
-            {genre.name}
+             {t(genre.name)}
           </div>
         ))}
       </div>

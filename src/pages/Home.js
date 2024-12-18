@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import './Home.scss';
-import YourComponent from '../components/YourComponent';
 
 // Функции логирования
 import { logInfo, logError } from '../utils/logger';
 
+// Подключение перевода
+import { useTranslation } from 'react-i18next';
+
 const Home = () => {
+  const { t } = useTranslation(); // Хук для перевода
 
   useEffect(() => {
     logInfo('Home page loaded');
@@ -22,7 +25,7 @@ const Home = () => {
     <div className="home-container">
       {/* Recently Played Playlists */}
       <div className="section">
-        <h2>Recently Played Playlists</h2>
+        <h2>{t('Recently Played Playlists')}</h2>
         <div 
           className="horizontal-scroll"
           onScroll={() => handleScroll('Recently Played Playlists')}
@@ -36,14 +39,9 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="output-container">
-        <YourComponent />
-        {logInfo('YourComponent rendered')}
-      </div>
-
       {/* Favourite Artists */}
       <div className="section">
-        <h2>Favourite Artists</h2>
+        <h2>{t('Favourite Artists')}</h2>
         <div 
           className="horizontal-scroll"
           onScroll={() => handleScroll('Favourite Artists')}
@@ -58,7 +56,7 @@ const Home = () => {
 
       {/* Recently Listened Podcasts */}
       <div className="section">
-        <h2>Recently Listened Podcasts</h2>
+        <h2>{t('Recently Listened Podcasts')}</h2>
         <div 
           className="horizontal-scroll"
           onScroll={() => handleScroll('Recently Listened Podcasts')}

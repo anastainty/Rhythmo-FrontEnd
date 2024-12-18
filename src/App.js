@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; 
 import Sidebar from './components/Sidebar';
 import Player from './components/Player';
 import Home from './pages/Home';
@@ -13,6 +14,7 @@ import './App.scss';
 
 const App = () => {
   const location = useLocation();
+  const { t } = useTranslation(); 
   const isRegistrationPage = location.pathname === '/registration';
 
   return (
@@ -25,7 +27,9 @@ const App = () => {
           <div className="profile-header">
             <PageTitle />
             <li>
-              <Link to="/registration" className="logout-button">Log out</Link>
+              <Link to="/registration" className="logout-button">
+                {t('Log out')} 
+              </Link>
             </li>
             <Link to="/pages/profile">
               <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />

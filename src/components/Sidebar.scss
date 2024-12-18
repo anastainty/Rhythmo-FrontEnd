@@ -73,3 +73,27 @@
     }
   }
 }
+
+.language-switcher {
+  margin-top: auto;
+  padding: 10px 0;
+  text-align: center;
+
+  button {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: #555;
+      color: #fff;
+    }
+  }
+}
+

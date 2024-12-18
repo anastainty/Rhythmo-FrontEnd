@@ -1,14 +1,62 @@
-// src/utils/logger.js
+const SERVER_LOG_ENDPOINT = ''; 
 
-// Функция для логирования информационных сообщений
+
+const getCSRFToken = () => {
+  const cookieValue = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('csrftoken='))
+    ?.split('=')[1];
+  return cookieValue || '';
+};
+
+const sendLogToServer = async (level, message, data = {}) => {
+  const csrfToken = getCSRFToken();
+
+  if (!csrfToken) {
+    console.error('CSRF token is missing. Log not sent to server.');
+    return;
+  }
+
+  const payload = {
+    level,
+    message,
+    data,
+    timestamp: new Date().toISOString(),
+  };
+
+  try {
+    const response = await fetch(SERVER_LOG_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken, // CSRF-токен для защиты
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      console.warn(`Failed to send log to server. Status: ${response.status} ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error('Error while sending log to server:', error);
+  }
+};
+
+
 export const logInfo = (message, data = {}) => {
-    console.log('INFO:', message, data); // Логирование в консоль
-    // Здесь можно добавить дополнительную логику, например, отправку логов на сервер.
+  console.log('INFO:', message, data);
+  sendLogToServer('INFO', message, data);
+};
+
+
+export const logError = (message, error = {}) => {
+  console.error('ERROR:', message, error);
+
+  const errorData = {
+    message: error.message || 'No error message provided',
+    stack: error.stack || 'No stack trace available',
+    ...error, 
   };
-  
-  // Функция для логирования ошибок
-  export const logError = (message, error = {}) => {
-    console.error('ERROR:', message, error); // Логирование ошибок в консоль
-    // Также здесь можно добавить логику отправки ошибок на сервер для анализа.
-  };
-  
+
+  sendLogToServer('ERROR', message, errorData);
+};

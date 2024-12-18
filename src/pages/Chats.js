@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import "./Chats.scss";
 
 const contacts = [
@@ -19,11 +20,12 @@ const initialMessages = {
 };
 
 const Chats = () => {
-  const [activeChat, setActiveChat] = useState(1); // ID текущего открытого чата
+  const { t } = useTranslation(); 
+  const [activeChat, setActiveChat] = useState(1);
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState(initialMessages);
-  const [searchQuery, setSearchQuery] = useState(""); // Для хранения поискового запроса
-  const [filteredContacts, setFilteredContacts] = useState(contacts); // Для отображения отфильтрованных контактов
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredContacts, setFilteredContacts] = useState(contacts);
 
   const chatSocket = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -41,7 +43,7 @@ const Chats = () => {
   useEffect(() => {
     console.log(`Active chat changed to: ${activeChat}`);
     scrollToBottom();
-  }, [messages[activeChat], activeChat]); // Логируем изменение активного чата
+  }, [messages[activeChat], activeChat]);
 
   useEffect(() => {
     if (activeChat === 4) {
@@ -109,14 +111,14 @@ const Chats = () => {
   };
 
   const handleSearch = (query) => {
-    console.log(`Search query: ${query}`); // Логируем каждый ввод в поисковое поле
+    console.log(`Search query: ${query}`);
     setSearchQuery(query);
     const filtered = contacts.filter(contact =>
       contact.name.toLowerCase().includes(query.toLowerCase()) ||
       contact.lastMessage.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredContacts(filtered);
-    console.log(`Filtered contacts: ${filtered.map(contact => contact.name).join(", ")}`); // Логируем результаты поиска
+    console.log(`Filtered contacts: ${filtered.map(contact => contact.name).join(", ")}`);
   };
 
   return (
@@ -125,7 +127,7 @@ const Chats = () => {
         <div className="chat-contacts-searcher">
           <input
             type="text"
-            placeholder="Search messages..."
+            placeholder={t("Search messages...")} 
             className="search-input"
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
@@ -170,7 +172,9 @@ const Chats = () => {
           <div className="user-info">
             <h3 className="user-name">{contacts.find((contact) => contact.id === activeChat)?.name}</h3>
             <span className="user-status">
-              {contacts.find((contact) => contact.id === activeChat)?.online ? "Online" : "Last seen recently"}
+              {contacts.find((contact) => contact.id === activeChat)?.online
+                ? t("Online")  // Перевод статуса "Online"
+                : t("Last seen recently")}  {/* Перевод статуса "Last seen recently" */}
             </span>
           </div>
         </div>
@@ -190,7 +194,7 @@ const Chats = () => {
         <div className="message-input-container">
           <input
             type="text"
-            placeholder="Type something..."
+            placeholder={t("Type something...")}  
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={handleKeyDown}

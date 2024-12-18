@@ -1,27 +1,28 @@
-
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './PageTitle.scss';
 
 const PageTitle = () => {
   const location = useLocation();
+  const { t } = useTranslation(); 
 
   const getPageTitle = () => {
     switch (location.pathname) {
       case '/pages/profile':
-        return 'Profile';
+        return t('Profile'); 
       case '/':
-        return 'Home';
+        return t('Home');
       case '/library':
-        return 'Library';
+        return t('Library'); 
       case '/search':
-        return 'Search';
+        return t('Search'); 
       case '/registration':
-        return 'Registration';
+        return t('Registration'); 
       case '/chats':
-        return 'Chats';
+        return t('Chats');
       default:
-        return 'Unknown Page name';
+        return t('Unknown Page name'); 
     }
   };
 
