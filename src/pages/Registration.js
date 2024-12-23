@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import api from './api';
+import axios from 'axios';
 import { logInfo, logError } from '../utils/logger';
 import './Registration.scss';
 
@@ -16,7 +17,7 @@ const Registration = () => {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
-  
+
   const [loginData, setLoginData] = useState({
     username: '',
     password: '',
@@ -56,7 +57,7 @@ const Registration = () => {
     if (!formData.email.includes('@')) {
       newErrors.email = t('errorEmail');
     }
-    if (formData.password.length < 6) {
+    if (formData.password.length < 5) {
       newErrors.password = t('errorPassword');
     }
     if (formData.password !== formData.confirmPassword) {
@@ -70,7 +71,7 @@ const Registration = () => {
     if (!loginData.username) {
       loginErrors.username = t('errorLoginUsername');
     }
-    if (loginData.password.length < 6) {
+    if (loginData.password.length < 5) {
       loginErrors.password = t('errorLoginPassword');
     }
     return loginErrors;
@@ -107,7 +108,7 @@ const Registration = () => {
     const validationErrors = validateLogin();
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await api.post(`/token/`, {
+        const response = await axios.post(`http://127.0.0.1:8000/api/token/`, {
           username: loginData.username,
           password: loginData.password,
         });
@@ -120,7 +121,7 @@ const Registration = () => {
       } catch (error) {
         logError('Error during login', { error });
         console.error('Error during login:', error);
-        setLoginErrors({ form: t('errorLogin') });
+        setLoginErrors({ form: t('errorLogin')});
       }
     } else {
       setLoginErrors(validationErrors);

@@ -1,20 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://192.168.0.100:8000/',
+  baseURL: 'http://127.0.0.1:8000/',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Функция для получения CSRF токена из cookie
-const getCSRFToken = () => {
-  const csrfToken = document.cookie
-    .split(';')
-    .find(cookie => cookie.trim().startsWith('csrftoken='))
-    ?.split('=')[1];
-  return csrfToken || '';
-};
 
 // Функция для обновления access token
 const refreshAccessToken = async () => {
@@ -24,7 +16,7 @@ const refreshAccessToken = async () => {
       throw new Error('Refresh token is missing.');
     }
 
-    const response = await axios.post('http://192.168.0.100:8000/', {
+    const response = await axios.post('http://127.0.0.1:8000/token/refresh', {
       refresh: refreshToken,
     });
 
@@ -40,14 +32,12 @@ const refreshAccessToken = async () => {
 api.interceptors.request.use(
   async (config) => {
     let accessToken = localStorage.getItem('accessToken');
-    const csrfToken = getCSRFToken(); 
 
     if (!accessToken) {
       throw new Error('Access token is missing.');
     }
 
-    config.headers.Authorization = `Bearer ${accessToken}`; 
-    config.headers['X-CSRFToken'] = csrfToken;  
+    config.headers.Authorization = `Bearer ${accessToken}`;
 
     return config;
   },
@@ -76,7 +66,7 @@ api.interceptors.response.use(
 
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = 'http://192.168.0.100:8000/'; 
+        window.location.href = '/registration';
       }
     }
 

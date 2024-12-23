@@ -1,21 +1,6 @@
-const SERVER_LOG_ENDPOINT = ''; 
-
-
-const getCSRFToken = () => {
-  const cookieValue = document.cookie
-    .split('; ')
-    .find(row => row.startsWith('csrftoken='))
-    ?.split('=')[1];
-  return cookieValue || '';
-};
+const SERVER_LOG_ENDPOINT = '';
 
 const sendLogToServer = async (level, message, data = {}) => {
-  const csrfToken = getCSRFToken();
-
-  if (!csrfToken) {
-    console.error('CSRF token is missing. Log not sent to server.');
-    return;
-  }
 
   const payload = {
     level,
@@ -29,7 +14,6 @@ const sendLogToServer = async (level, message, data = {}) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken, // CSRF-токен для защиты
       },
       body: JSON.stringify(payload),
     });

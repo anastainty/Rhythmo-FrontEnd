@@ -48,7 +48,6 @@ const Search = () => {
         
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRFToken': getCSRFToken(),
         },
         credentials: 'include',
         body: JSON.stringify({ query: searchQuery }),
