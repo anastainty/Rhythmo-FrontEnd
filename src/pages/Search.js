@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { logInfo, logError } from '../utils/logger'; 
 import './Search.scss';
 import { useTranslation } from 'react-i18next';
+import api from "./api";
 
 const Search = () => {
   const { t } = useTranslation(); 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState('All');
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const searchOptions = ['All', 'Playlists', 'Podcasts', 'Songs', 'Albums', 'Artists', 'Profiles'];
+  const searchOptions = ['All', 'Playlists', 'Songs', 'Albums', 'Artists'];
 
   const genres = [
     { name: 'Pop', gradient: 'linear-gradient(to bottom, rgb(225, 154, 176), rgb(156, 197, 197))', color: 'rgb(145, 94, 101)' },
@@ -42,64 +45,91 @@ const Search = () => {
   }, [searchQuery, searchType]);
 
   const handleSearchSubmit = async () => {
+    if (!searchQuery.trim()) {
+      return;
+    }
+
+    setLoading(true);
     try {
-      const response = await fetch('', {
-        method: 'POST',
-        
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ query: searchQuery }),
-      });
-  
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Результат поиска:', result);
-      } else {
-        console.error('Ошибка поиска:', response.statusText);
-      }
+      const response = await api.post(
+          '/search/', // Базовый URL эндпоинта
+          {
+            query: searchQuery, // Текст поиска
+            type: searchType,   // Тип поиска
+          },
+      );
+
+      setSearchResults(response.data);
     } catch (error) {
-      console.error('Ошибка сети при отправке поиска:', error);
+      console.error('Ошибка выполнения поиска:', error.message);
+    } finally {
+      setLoading(false);
     }
   };
-  
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit();
+    }
+  };
+
   return (
-    <div className="search-page">
-      <input
-        type="text"
-        placeholder={t('Search for a song, artist, or album...')}
-        value={searchQuery}
-        onChange={handleSearchChange}
-        className="search-input"
-      />
+      <div className="search-page">
+        <input
+            type="text"
+            placeholder={t('Search for a song, artist, or album...')}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown} // Обработчик нажатия клавиши
+            className="search-input"
+        />
 
-      <div className="search-options">
-        {searchOptions.map((option) => (
-          <button
-            key={option}
-            className={`search-option ${searchType === option ? 'active' : ''}`}
-            onClick={() => handleSearchTypeChange(option)}
-          >
-            {t(option)}
-          </button>
-        ))}
-      </div>
+        <div className="search-options">
+          {searchOptions.map((option) => (
+              <button
+                  key={option}
+                  className={`search-option ${searchType === option ? 'active' : ''}`}
+                  onClick={() => handleSearchTypeChange(option)}
+              >
+                {t(option)}
+              </button>
+          ))}
+        </div>
 
-      <h4 className="genres-heading">{t('Genres')}&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;{t('Discover new music')}</h4>
-      <div className="genres-container">
-        {genres.map((genre) => (
-          <div
-            key={genre.name}
-            className="genre-box"
-            style={{ background: genre.gradient, color: genre.color }} 
-            onClick={() => logInfo('Genre clicked', { genre: genre.name })}
-          >
-             {t(genre.name)}
-          </div>
-        ))}
+        <h4 className="genres-heading">{t('Genres')}&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;{t('Discover new music')}</h4>
+        <div className="genres-container">
+          {genres.map((genre) => (
+              <div
+                  key={genre.name}
+                  className="genre-box"
+                  style={{ background: genre.gradient, color: genre.color }}
+              >
+                {t(genre.name)}
+              </div>
+          ))}
+        </div>
+
+        {searchResults.length > 0 && (
+            <div className="search-results">
+              <h2>{t('Search Results')}</h2>
+              {searchResults.map((result) => (
+                  <div key={result.id} className="search-result-item">
+                    <div className="result-info">
+                      <h3>{result.title}</h3>
+                      <p>{result.details}</p>
+                    </div>
+                  </div>
+              ))}
+            </div>
+        )}
+
+        {/* Если нет результатов, показываем сообщение */}
+        {searchResults.length === 0 && !loading && searchQuery && (
+            <div className="no-results">
+              {t('No results found for')} "{searchQuery}"
+            </div>
+        )}
       </div>
-    </div>
   );
 };
 

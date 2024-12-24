@@ -115,6 +115,7 @@ const Registration = () => {
         const { access, refresh } = response.data;
         localStorage.setItem('accessToken', access);
         localStorage.setItem('refreshToken', refresh);
+        localStorage.setItem('username', loginData.username);
         logInfo('Login successful', { responseData: response.data });
         console.log('Login successful:', response.data);
         alert(t('loginSuccess'));

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; 
 import Sidebar from './components/Sidebar';
 import Player from './components/Player';
 import Home from './pages/Home';
@@ -14,8 +13,10 @@ import './App.scss';
 
 const App = () => {
   const location = useLocation();
-  const { t } = useTranslation(); 
   const isRegistrationPage = location.pathname === '/registration';
+
+  // Состояние текущего трека
+  const [currentTrack, setCurrentTrack] = useState(null);
 
   return (
     <div className="app-container">
@@ -27,9 +28,7 @@ const App = () => {
           <div className="profile-header">
             <PageTitle />
             <li>
-              <Link to="/registration" className="logout-button">
-                {t('Log out')} 
-              </Link>
+              <Link to="/registration" className="logout-button">Log out</Link>
             </li>
             <Link to="/pages/profile">
               <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
@@ -40,14 +39,17 @@ const App = () => {
         <Routes>
           <Route path="/pages/profile" element={<Profile />} />
           <Route path="/" element={<Home />} />
-          <Route path="/library" element={<Library />} />
+          <Route
+            path="/library"
+            element={<Library onTrackSelect={setCurrentTrack} />} // Передача функции выбора трека
+          />
           <Route path="/search" element={<Search />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/chats" element={<Chats />} />
         </Routes>
       </div>
 
-      {!isRegistrationPage && <Player />}
+      {!isRegistrationPage && <Player currentTrack={currentTrack} />}
     </div>
   );
 };
