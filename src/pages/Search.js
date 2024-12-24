@@ -4,7 +4,7 @@ import './Search.scss';
 import { useTranslation } from 'react-i18next';
 import api from "./api";
 
-const Search = () => {
+const Search = ({ onTrackSelect }) => { // добавляем пропс для установки текущего трека
   const { t } = useTranslation(); 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchType, setSearchType] = useState('All');
@@ -73,63 +73,85 @@ const Search = () => {
     }
   };
 
+  const handleTrackSelect = (track) => {
+    // Вызываем переданный пропс для обновления текущего трека в App.js
+    onTrackSelect(track);
+  };
+
   return (
-      <div className="search-page">
-        <input
-            type="text"
-            placeholder={t('Search for a song, artist, or album...')}
-            value={searchQuery}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyDown} // Обработчик нажатия клавиши
-            className="search-input"
-        />
+    <div className="search-page">
+      <input
+        type="text"
+        placeholder={t('Search for a song, artist, or album...')}
+        value={searchQuery}
+        onChange={handleSearchChange}
+        onKeyDown={handleKeyDown} // Обработчик нажатия клавиши
+        className="search-input"
+      />
 
-        <div className="search-options">
-          {searchOptions.map((option) => (
-              <button
-                  key={option}
-                  className={`search-option ${searchType === option ? 'active' : ''}`}
-                  onClick={() => handleSearchTypeChange(option)}
-              >
-                {t(option)}
-              </button>
-          ))}
-        </div>
-
-        <h4 className="genres-heading">{t('Genres')}&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;{t('Discover new music')}</h4>
-        <div className="genres-container">
-          {genres.map((genre) => (
-              <div
-                  key={genre.name}
-                  className="genre-box"
-                  style={{ background: genre.gradient, color: genre.color }}
-              >
-                {t(genre.name)}
-              </div>
-          ))}
-        </div>
-
-        {searchResults.length > 0 && (
-            <div className="search-results">
-              <h2>{t('Search Results')}</h2>
-              {searchResults.map((result) => (
-                  <div key={result.id} className="search-result-item">
-                    <div className="result-info">
-                      <h3>{result.title}</h3>
-                      <p>{result.details}</p>
-                    </div>
-                  </div>
-              ))}
-            </div>
-        )}
-
-        {/* Если нет результатов, показываем сообщение */}
-        {searchResults.length === 0 && !loading && searchQuery && (
-            <div className="no-results">
-              {t('No results found for')} "{searchQuery}"
-            </div>
-        )}
+      <div className="search-options">
+        {searchOptions.map((option) => (
+          <button
+            key={option}
+            className={`search-option ${searchType === option ? 'active' : ''}`}
+            onClick={() => handleSearchTypeChange(option)}
+          >
+            {t(option)}
+          </button>
+        ))}
       </div>
+
+      <h4 className="genres-heading">{t('Genres')}&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;{t('Discover new music')}</h4>
+      <div className="genres-container">
+        {genres.map((genre) => (
+          <div
+            key={genre.name}
+            className="genre-box"
+            style={{ background: genre.gradient, color: genre.color }}
+          >
+            {t(genre.name)}
+          </div>
+        ))}
+      </div>
+
+      {/* Отображаем результаты поиска */}
+      {searchResults.length > 0 && (
+          <div className="search-results">
+            {searchResults.map((result) => (
+                <div
+                    key={result.id}
+                    className={`search-result ${result.type.toLowerCase()}`}
+                    onClick={() => {
+                      if (result.type === "Track" && onTrackSelect) {
+                        onTrackSelect(result);
+                      }
+                    }}
+                >
+                  {result.cover && (
+                      <img
+                          src={`data:image/jpeg;base64,${result.cover}`}
+                          alt={result.title || result.name}
+                          className="result-cover"
+                      />
+                  )}
+                  <div className="result-info">
+                    <div className="result-title">
+                      {result.title || result.name || result.username}
+                    </div>
+                    <div className="result-details">{result.details}</div>
+                  </div>
+                </div>
+            ))}
+          </div>
+      )}
+
+      {/* Если нет результатов, показываем сообщение */}
+      {searchResults.length === 0 && !loading && searchQuery && (
+          <div className="no-results">
+            {t('No results found for')} "{searchQuery}"
+          </div>
+      )}
+    </div>
   );
 };
 

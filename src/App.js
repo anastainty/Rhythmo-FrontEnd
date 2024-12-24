@@ -12,52 +12,52 @@ import Registration from './pages/Registration';
 import './App.scss';
 
 const App = () => {
-  const location = useLocation();
-  const isRegistrationPage = location.pathname === '/registration';
+    const location = useLocation();
+    const isRegistrationPage = location.pathname === '/registration';
 
-  // Состояние текущего трека
-  const [currentTrack, setCurrentTrack] = useState(null);
+    // Состояние текущего трека
+    const [currentTrack, setCurrentTrack] = useState(null);
 
-  return (
-    <div className="app-container">
-      {!isRegistrationPage && <Sidebar />}
-      <div
-        className={`content-container ${isRegistrationPage ? 'registration-style' : ''}`}
-      >
-        {!isRegistrationPage && (
-          <div className="profile-header">
-            <PageTitle />
-            <li>
-              <Link to="/registration" className="logout-button">Log out</Link>
-            </li>
-            <Link to="/pages/profile">
-              <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
-            </Link>
-          </div>
-        )}
+    return (
+        <div className="app-container">
+            {!isRegistrationPage && <Sidebar />}
+            <div
+                className={`content-container ${isRegistrationPage ? 'registration-style' : ''}`}
+            >
+                {!isRegistrationPage && (
+                    <div className="profile-header">
+                        <PageTitle />
+                        <li>
+                            <Link to="/registration" className="logout-button">Log out</Link>
+                        </li>
+                        <Link to="/pages/profile">
+                            <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
+                        </Link>
+                    </div>
+                )}
 
-        <Routes>
-          <Route path="/pages/profile" element={<Profile />} />
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/library"
-            element={<Library onTrackSelect={setCurrentTrack} />} // Передача функции выбора трека
-          />
-          <Route path="/search" element={<Search />} />
-          <Route path="/registration" element={<Registration />} />
-          <Route path="/chats" element={<Chats />} />
-        </Routes>
-      </div>
+                <Routes>
+                    <Route path="/pages/profile" element={<Profile />} />
+                    <Route path="/" element={<Home />} />
+                    <Route
+                        path="/library"
+                        element={<Library onTrackSelect={setCurrentTrack} />} // Передача функции выбора трека
+                    />
+                    <Route path="/search" element={<Search onTrackSelect={setCurrentTrack} />} /> {/* Передача функции в Search */}
+                    <Route path="/registration" element={<Registration />} />
+                    <Route path="/chats" element={<Chats />} />
+                </Routes>
+            </div>
 
-      {!isRegistrationPage && <Player currentTrack={currentTrack} />}
-    </div>
-  );
+            {!isRegistrationPage && <Player currentTrack={currentTrack} />}
+        </div>
+    );
 };
 
 const AppWrapper = () => (
-  <Router>
-    <App />
-  </Router>
+    <Router>
+        <App />
+    </Router>
 );
 
 export default AppWrapper;
