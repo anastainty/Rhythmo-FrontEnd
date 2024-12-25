@@ -82,12 +82,13 @@ const Profile = ({ onProfilePictureChange }) => {
     <div className="profile-container">
       <div className="profile-header">
         <label htmlFor="profilePicture" className="profile-picture-label">
-          <img
-            src={userData.profilePicture}
-            alt="Profile"
-            className="big-profile-picture"
-            onClick={isEditing ? null : openProfilePictureWindow} // Открыть новое окно при клике
-          />
+        <img
+              src={userData.profilePicture}
+              alt="Profile"
+              className={`big-profile-picture ${isEditing ? 'editing' : ''}`}
+              onClick={isEditing ? null : openProfilePictureWindow}
+        />
+
           {isEditing && (
             <input
               id="profilePicture"
