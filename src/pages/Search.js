@@ -101,18 +101,7 @@ const Search = ({ onTrackSelect }) => { // добавляем пропс для 
         ))}
       </div>
 
-      <h4 className="genres-heading">{t('Genres')}&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;{t('Discover new music')}</h4>
-      <div className="genres-container">
-        {genres.map((genre) => (
-          <div
-            key={genre.name}
-            className="genre-box"
-            style={{ background: genre.gradient, color: genre.color }}
-          >
-            {t(genre.name)}
-          </div>
-        ))}
-      </div>
+
 
       {/* Отображаем результаты поиска */}
       {searchResults.length > 0 && (

@@ -63,7 +63,7 @@ const Home = () => {
 
 
       <div className="section">
-        <h2>{t('Recently Played Playlists')}</h2>
+        <h2>{t('Recently Played Songs')}</h2>
         <div
           className="horizontal-scroll"
           onScroll={() => handleScroll('Recently Played Playlists')}
@@ -92,17 +92,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Favourite Artists */}
-      <div className="section">
-        <h2>{t('Favourite Artists')}</h2>
-        <div
-          className="horizontal-scroll"
-          onScroll={() => handleScroll('Favourite Artists')}
-        >
-          <div className="artist-item">Artist 1</div>
-          <div className="artist-item">Artist 2</div>
-        </div>
-      </div>
 
 
       {/* Footer */}
