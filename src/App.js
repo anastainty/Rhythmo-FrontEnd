@@ -15,8 +15,14 @@ const App = () => {
     const location = useLocation();
     const isRegistrationPage = location.pathname === '/registration';
 
-    // Состояние текущего трека
+    // Состояние для текущего трека и аватарки
     const [currentTrack, setCurrentTrack] = useState(null);
+    const [profilePicture, setProfilePicture] = useState("/profile-picture.jpg");
+
+    // Функция для обновления аватарки
+    const handleProfilePictureChange = (newPicture) => {
+        setProfilePicture(newPicture); // Обновляем аватарку в родительском компоненте
+    };
 
     return (
         <div className="app-container">
@@ -31,19 +37,26 @@ const App = () => {
                             <Link to="/registration" className="logout-button">Log out</Link>
                         </li>
                         <Link to="/pages/profile">
-                            <img src="/profile-picture.jpg" alt="Profile" className="profile-picture" />
+                            <img
+                                src={profilePicture} // Используем динамическую аватарку
+                                alt="Profile"
+                                className="profile-picture"
+                            />
                         </Link>
                     </div>
                 )}
 
                 <Routes>
-                    <Route path="/pages/profile" element={<Profile />} />
+                    <Route
+                        path="/pages/profile"
+                        element={<Profile onProfilePictureChange={handleProfilePictureChange} />}
+                    />
                     <Route path="/" element={<Home />} />
                     <Route
                         path="/library"
-                        element={<Library onTrackSelect={setCurrentTrack} />} // Передача функции выбора трека
+                        element={<Library onTrackSelect={setCurrentTrack} />}
                     />
-                    <Route path="/search" element={<Search onTrackSelect={setCurrentTrack} />} /> {/* Передача функции в Search */}
+                    <Route path="/search" element={<Search onTrackSelect={setCurrentTrack} />} />
                     <Route path="/registration" element={<Registration />} />
                     <Route path="/chats" element={<Chats />} />
                 </Routes>
