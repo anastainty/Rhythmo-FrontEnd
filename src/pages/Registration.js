@@ -108,7 +108,7 @@ const Registration = () => {
     const validationErrors = validateLogin();
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await axios.post(`http://127.0.0.1:8000/api/token/`, {
+        const response = await axios.post(`http://100.99.74.40:8000/`, {
           username: loginData.username,
           password: loginData.password,
         });

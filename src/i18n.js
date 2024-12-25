@@ -68,6 +68,7 @@ i18n.use(initReactI18next).init({
         Search: "Поиск",
         Chats: "Чаты",
         Registration: "Регистрация",
+        Profile: "Профиль",
         "Unknown Page name": "Неизвестное имя страницы",
         "Recently Played Playlists": "Недавно прослушанные плейлисты",
         "Favourite Artists": "Любимые артисты",
@@ -117,7 +118,8 @@ i18n.use(initReactI18next).init({
         "registrationSuccess": "Вы успешно зарегистрировались!",
         "loginSuccess": "Вы успешно вошли в систему!",
         "errorRegistration": "Ошибка при регистрации. Попробуйте ещё раз.",
-        "errorLogin": "Ошибка при входе. Попробуйте ещё раз."
+        "errorLogin": "Ошибка при входе. Попробуйте ещё раз.",
+        "Edit profile": "Изменить профиль"
         
       }
     }

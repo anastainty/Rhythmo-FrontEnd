@@ -109,7 +109,7 @@ const Profile = ({ onProfilePictureChange }) => {
                   value={userData.name}
                   onChange={handleInputChange}
                   className="edit-input"
-                  placeholder="Имя"
+                  placeholder="Name"
                 />
                 <input
                   type="text"
@@ -117,7 +117,7 @@ const Profile = ({ onProfilePictureChange }) => {
                   value={userData.surname}
                   onChange={handleInputChange}
                   className="edit-input"
-                  placeholder="Фамилия"
+                  placeholder="Last Name"
                 />
               </>
             ) : (
